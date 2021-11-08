@@ -14,6 +14,7 @@ const getallJobs = async (req, res) => {
         const jobs = await Job.find({
             createdBy: req.user.userId
         }).limit(process.env.LIMIT).sort('createdAt')
+
         res.status(StatusCodes.OK).json({
             jobs,
             count: jobs.length
@@ -89,11 +90,11 @@ const deleteJob = async (req, res) => {
         } = req
 
         const job = await Job.findByIdAndRemove({
-            _id : jobId,
-            createdBy : userId
+            _id: jobId,
+            createdBy: userId
         })
 
-        if(!job){
+        if (!job) {
             res.send('No job found with this user Id')
             throw new NotFound('No job found with this user Id')
         }
@@ -104,9 +105,29 @@ const deleteJob = async (req, res) => {
     }
 }
 
+const searchjob = async (req, res) => {
+    try {
+        var regex = new RegExp(req.params.name, 'i')
+        console.log(req.params.name)
+
+        if (regex != null) {
+            await Job.find({$and : [{ $or :[{position:regex} ,{company:regex}] }]})
+                .then((result) => {
+                    res.status(StatusCodes.OK).json(result)
+                })
+        }
+        else {
+            res.end()
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 module.exports = {
     getallJobs,
     createJob,
     updateJob,
-    deleteJob
+    deleteJob,
+    searchjob
 }
