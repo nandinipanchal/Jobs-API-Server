@@ -119,7 +119,7 @@ const searchjob = async (req, res) => {
         else {
             res.end()
         }
-    } catch (error) {
+    } catch (error) { 
         console.error(error)
     }
 }
