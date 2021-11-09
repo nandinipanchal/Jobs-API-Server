@@ -12,6 +12,6 @@ const {
 
 router.route('/').get(getallJobs).post(createJob)
 router.route('/:id').patch(updateJob).delete(deleteJob)
-router.route('/search/:name').get(searchjob)
+router.route('/search/:keyword').get(searchjob)
 
 module.exports = router
