@@ -14,33 +14,54 @@ const getallJobs = async (req, res) => {
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
         
-        const startIndex = (page-1) * limit
-        const endIndex = page * limit
+        if (!page || !limit) {
+            const jobs = await Job.find({
+                createdBy: req.user.userId
+            }).sort('createdAt')
+            const results ={}
+            results.results = jobs.slice(0,4)
+            res.status(StatusCodes.OK).json({
+                results,
+                count: results.results.length
+            })
+        }
+        else {
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+
+            const results = {}
+
+            const jobs = await Job.find({
+                createdBy: req.user.userId
+            }).sort('createdAt')
+
+            if (startIndex > 0) {
+                results.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+            if (endIndex < jobs.length) {
+                results.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+
+            results.results = jobs.slice(startIndex, endIndex)
+            let cnt = results.results.length
+            if (cnt === 0){
+                res.send('Invalid request of page number')
+            }
+            else{
+                res.status(StatusCodes.OK).json({
+                    results,
+                    count: results.results.length
+                })
+            }
+           
+        }
         
-        const results ={}
-
-        const jobs = await Job.find({
-            createdBy: req.user.userId
-        }).sort('createdAt')
-
-        if (startIndex > 0) {
-            results.previous = {
-                page: page - 1,
-                limit: limit
-            }
-        }
-        if (endIndex < jobs.length){
-            results.next={
-                page: page+1,
-                limit: limit
-            }
-        }
-   
-        results.results = jobs.slice(startIndex,endIndex)
-        res.status(StatusCodes.OK).json({
-            results,
-            count: results.results.length
-        })
     } catch (error) {
         console.log(error)
     }
