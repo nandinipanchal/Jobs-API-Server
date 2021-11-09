@@ -39,7 +39,7 @@ const getallJobs = async (req, res) => {
         results.results = jobs.slice(startIndex,endIndex)
         res.status(StatusCodes.OK).json({
             results,
-            count: jobs.length
+            count: results.results.length
         })
     } catch (error) {
         console.log(error)
