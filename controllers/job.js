@@ -22,7 +22,8 @@ const getallJobs = async (req, res) => {
             results.results = jobs.slice(0,4)
             res.status(StatusCodes.OK).json({
                 results,
-                count: results.results.length
+                count: results.results.length,
+                total : jobs.length
             })
         }
         else {
@@ -56,7 +57,9 @@ const getallJobs = async (req, res) => {
             else{
                 res.status(StatusCodes.OK).json({
                     results,
-                    count: results.results.length
+                    count: results.results.length,
+                    pageNumber : page,
+                    total : jobs.length 
                 })
             }
            
