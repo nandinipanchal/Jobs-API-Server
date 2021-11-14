@@ -16,7 +16,9 @@ app.use('/api/v1', publicjobs)
 app.use('/api/v1/job', authenticateUser, jobRoute)
 app.use('/api/v1/user', userRoute)
 
-
+app.get('/', (req,res) =>{
+    res.send('Welcome')
+})
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URL)
