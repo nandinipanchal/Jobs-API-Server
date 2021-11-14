@@ -11,18 +11,64 @@ const {
 
 const getallJobs = async (req, res) => {
     try {
-        const jobs = await Job.find({
-            createdBy: req.user.userId
-        }).limit(process.env.LIMIT).sort('createdAt')
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+        
+        if (!page || !limit) {
+            const jobs = await Job.find({
+                createdBy: req.user.userId
+            }).sort('createdAt')
+            const results ={}
+            results.results = jobs.slice(0,4)
+            res.status(StatusCodes.OK).json({
+                results,
+                count: results.results.length,
+                total : jobs.length
+            })
+        }
+        else {
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
 
-        res.status(StatusCodes.OK).json({
-            jobs,
-            count: jobs.length
-        })
+            const results = {}
+
+            const jobs = await Job.find({
+                createdBy: req.user.userId
+            }).sort('createdAt')
+
+            if (startIndex > 0) {
+                results.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+            if (endIndex < jobs.length) {
+                results.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+
+            results.results = jobs.slice(startIndex, endIndex)
+            let cnt = results.results.length
+            if (cnt === 0){
+                res.send('Invalid request of page number')
+            }
+            else{
+                res.status(StatusCodes.OK).json({
+                    results,
+                    count: results.results.length,
+                    pageNumber : page,
+                    total : jobs.length 
+                })
+            }
+           
+        }
+        
     } catch (error) {
         console.log(error)
     }
-}
+}  
 
 const createJob = async (req, res) => {
     try {
@@ -107,8 +153,8 @@ const deleteJob = async (req, res) => {
 
 const searchjob = async (req, res) => {
     try {
-        var regex = new RegExp(req.params.name, 'i')
-        console.log(req.params.name)
+        var regex = new RegExp(req.params.keyword, 'i')
+        console.log(req.params.keyword)
 
         if (regex != null) {
             await Job.find({$and : [{ $or :[{position:regex} ,{company:regex}] }]})
