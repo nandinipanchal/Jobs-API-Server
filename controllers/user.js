@@ -6,6 +6,7 @@ const {
     BadRequest,
     Unauthorized
 } = require('http-errors')
+const nodemailer = require('../config/nodemailer')
 
 const register = async (req, res) => {
     try {
@@ -14,55 +15,59 @@ const register = async (req, res) => {
         })
         const token = user.createJWT()
         res.status(StatusCodes.CREATED).json({
-            user :{
-                name :user.name
+            user: {
+                name: user.name
             },
             token
         })
+        nodemailer.sendConfirmationEmail(
+            user.name,
+            user.email
+        )
     } catch (error) {
         console.error(error)
     }
 }
 
 const login = async (req, res) => {
-    
-    try{
+
+    try {
         const {
             email,
             password
         } = req.body
-        if( !email || !password){
+        if (!email || !password) {
             res.send('Please provide Email and password')
             throw new BadRequest('Please provide Email and password')
         }
-        else{
+        else {
             const user = await User.findOne({
                 email
             })
 
-            if(!user){
+            if (!user) {
                 res.send('Invalid credentials')
                 throw new Unauthorized('Invalid credentials')
             }
 
             const IspasswordCorrect = await user.comparePasswords(password)
 
-            if(!IspasswordCorrect){
+            if (!IspasswordCorrect) {
                 res.send('Invalid credentials')
                 throw new Unauthorized('Invalid credentials')
             }
 
             const token = user.createJWT()
             res.status(StatusCodes.OK).json({
-                user : {
-                    name :user.name
+                user: {
+                    name: user.name
                 },
                 token
             })
-    
+
         }
 
-    }catch(error){
+    } catch (error) {
         console.error(error)
     }
 }
