@@ -18,7 +18,8 @@ const register = async (req, res) => {
             user: {
                 name: user.name
             },
-            token
+            token,
+            message:`${user.name} registered successfully! Please check your mail`
         })
         nodemailer.sendConfirmationEmail(
             user.name,
