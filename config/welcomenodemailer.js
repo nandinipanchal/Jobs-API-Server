@@ -24,19 +24,7 @@ module.exports.sendConfirmationEmail = ( name,email ,sub ,text) => {
             .catch(error => {
                 console.log(error)
             })
-    // else if(email && sub && text){
-    //     console.log('test1')
-    //     transport.sendMail({
-    //         from:user,
-    //         to: email,
-    //         subject:sub,
-    //         text:text
-    //     })
-    //     .catch(error =>{
-    //         console.log(error)
-    //     })
-    // }
-     
+   
 }
 
 
