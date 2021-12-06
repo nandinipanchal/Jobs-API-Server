@@ -6,7 +6,8 @@ const {
     BadRequest,
     Unauthorized
 } = require('http-errors')
-const nodemailer = require('../config/nodemailer')
+const welcomenodemailer = require('../config/welcomenodemailer')
+const adminnodemailer = require('../config/adminnodermailer')
 
 const register = async (req, res) => {
     try {
@@ -21,7 +22,7 @@ const register = async (req, res) => {
             token,
             message:`${user.name} registered successfully! Please check your mail`
         })
-        nodemailer.sendConfirmationEmail(
+        welcomenodemailer.sendConfirmationEmail(
             user.name,
             user.email
         )
@@ -73,7 +74,25 @@ const login = async (req, res) => {
     }
 }
 
+const SendCustomMailtoUser = (req,res) =>{
+    try{    
+        const {
+            email,sub, text
+        } = req.body
+        adminnodemailer.sendNewsLetter(
+            email,
+            sub,
+            text
+        )
+        res.send(`Successfully sent mail to ${email} `)
+
+
+    }catch(error){ 
+        console.error(error)
+    }
+}
 module.exports = {
     register,
-    login
+    login,
+    SendCustomMailtoUser
 }
