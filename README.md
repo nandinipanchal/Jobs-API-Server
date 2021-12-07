@@ -6,11 +6,11 @@
 3 .Add .env and config/auth.config.js file with required configurations
 
 ## .env
-PORT = 
-MONGO_URL = 
-JWT_SECRET =
-JWT_LIFETIME =
-LIMIT = 
+PORT = <br>
+MONGO_URL = <br>
+JWT_SECRET = <br>
+JWT_LIFETIME = <br>
+LIMIT = <br>
 
 ## auth.config.js
 module.exports ={
