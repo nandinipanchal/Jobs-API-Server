@@ -1,8 +1,14 @@
 const nodemailer = require('nodemailer')
 const config = require('./auth.config')
+const fs = require('fs')
+const path = require('path')
+const handlebars = require('handlebars')
 
 const user = config.user
 const pass = config.pass
+
+const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/index.hbs"), "utf8")
+
 
 const transport = nodemailer.createTransport({
     service: 'Gmail',
@@ -12,16 +18,19 @@ const transport = nodemailer.createTransport({
     },
 })
 
-module.exports.sendConfirmationEmail = ( name,email ,sub ,text) => {
-    
+const template = handlebars.compile(emailTemplateSource)
+  
+module.exports.sendConfirmationEmail = ( name,email) => {
+    const htmlTosend = template({name:name})
         console.log('test0')
         transport.sendMail({
             from: user,
             to: email,
             subject: `Welcome to job's portal`,
-            text: `Hello ${name}`,
+            html:htmlTosend
         })
-            .catch(error => {
+        .catch(error => {
+                console.log("failed to send email")
                 console.log(error)
             })
    
