@@ -14,7 +14,7 @@ LIMIT = <br>
 
 ## auth.config.js
 module.exports ={
-    user:`abc@example.com`,<br>
-    pass:`1234`
+    user:`'abc@example.com'`,<br>
+    pass:`'1234'`
 }
 
