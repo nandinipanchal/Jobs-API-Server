@@ -5,16 +5,16 @@
 2. Install packages `npm install`
 3 .Add .env and config/auth.config.js file with required configurations
 
-##.env
+## .env
 PORT = 
 MONGO_URL = 
 JWT_SECRET =
 JWT_LIFETIME =
 LIMIT = 
 
-##auth.config.js
+## auth.config.js
 module.exports ={
-    user:'abc@example.com',
-    pass:'1234'
+    user:`abc@example.com`,<br>
+    pass:`1234`
 }
 
