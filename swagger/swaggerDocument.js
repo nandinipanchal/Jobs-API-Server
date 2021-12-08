@@ -26,6 +26,42 @@
         },
 
     ],
+    basePath:'/',
+    definitions:{
+        User:{
+            'required':['name','email','password'],
+            properties:{
+                'name':{
+                    type:'string'
+                },
+                'email':{
+                    type:'string'
+                },
+                'password':{
+                    type:'string'
+                }
+            }
+        },
+        UserLogin :{
+            'required':['email','password'],
+            properties:{
+                'email':{
+                    type:'string'
+                },
+                'password':{
+                    type:'string'
+                }
+            }
+        }
+    },
+    Users:{
+        type:'array',
+        $ref:'#/definitions/User'
+    },
+    Users:{
+        type:'array',
+        $ref:'#/definitions/UserLogin'
+    },
     components:{
         schemas:{
 
@@ -84,6 +120,7 @@
         '/job':{
             'get':{
                 summary:'Returns the jobs of user',
+                tags:['Job'],
                 responses:{
                     200:{
                         description:'List of jobs of user',
@@ -132,6 +169,7 @@
         '/':{
             'get':{
                 summary:'Returns the public jobs',
+                tags:['Job'],
                 responses:{
                     200:{
                         description:'List of public jobs',
@@ -172,6 +210,56 @@
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        },
+        '/user/register':{
+            'post':{
+                'tags':['Users'],
+                description:'Creates a new user',
+                parameters:[],
+                requestBody:{
+                    content:{
+                        'application/json':{
+                            schema:{
+                                $ref:'#/definitions/User'
+                               } 
+                        }
+                    }
+                },
+                produces:['application/json'],
+                responses:{
+                    200:{
+                        description:'New user is created',
+                        schema:{
+                            $ref:'#/definitions/User'
+                        }
+                    }
+                }
+            }
+        },
+        '/user/login':{
+            'post':{
+                'tags':['Users'],
+                description:'login the existing user',
+                parameters:[],
+                requestBody:{
+                    content:{
+                        'application/json':{
+                            schema:{
+                                $ref:'#/definitions/UserLogin'
+                            }
+                        }
+                    }
+                },
+                produces:['application/json'],
+                responses:{
+                    200:{
+                        description:'Log in successful',
+                        schema:{
+                            $ref:'#/definitions/UserLogin'
                         }
                     }
                 }
