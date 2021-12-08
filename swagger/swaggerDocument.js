@@ -76,9 +76,108 @@
                     }
                 }
             }
+        },
+       
+       
+    },
+    paths:{
+        '/job':{
+            'get':{
+                summary:'Returns the jobs of user',
+                responses:{
+                    200:{
+                        description:'List of jobs of user',
+                        'content':{
+                            'application/json':{
+                                schema:{
+                                    type:'array',
+                                    items:{
+                                        id:{
+                                            type:'string',
+                                            description:'ID of the job'
+                                        },
+                                        company:{
+                                            type:'string',
+                                            description:'company name'
+                                        },
+                                        position:{
+                                            type:'string',
+                                            description:'job role'
+                                        },
+                                        status:{
+                                            type:'string',
+                                            description:'status of job'
+                                        },
+                                        jobtype:{
+                                            type:'string',
+                                            description:'Jobtype-Public/Private'
+                                        },
+                                        createdBy:{
+                                            type:'object',
+                                            description:'Id of the user'
+                                        },
+                                        createdAt:{
+                                            type:'object',
+                                            description:'Time at when the job is created'
+                                        },
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        '/':{
+            'get':{
+                summary:'Returns the public jobs',
+                responses:{
+                    200:{
+                        description:'List of public jobs',
+                        'content':{
+                            'application/json':{
+                                schema:{
+                                    type:'array',
+                                    items:{
+                                        id:{
+                                            type:'string',
+                                            description:'ID of the job'
+                                        },
+                                        company:{
+                                            type:'string',
+                                            description:'company name'
+                                        },
+                                        position:{
+                                            type:'string',
+                                            description:'job role'
+                                        },
+                                        status:{
+                                            type:'string',
+                                            description:'status of job'
+                                        },
+                                        jobtype:{
+                                            type:'string',
+                                            description:'Jobtype-Public/Private'
+                                        },
+                                        createdBy:{
+                                            type:'object',
+                                            description:'Id of the user'
+                                        },
+                                        createdAt:{
+                                            type:'object',
+                                            description:'Time at when the job is created'
+                                        },
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
-   
 }
 
 module.exports = swaggerDocument
