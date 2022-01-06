@@ -21,6 +21,7 @@
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.2",
     "nodemailer-express-handlebars": "^4.0.0",
+    "puppeteer": "^13.0.1",
     "swagger-ui-express": "^4.2.0"
   },
   "devDependencies": {
