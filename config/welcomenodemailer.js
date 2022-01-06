@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const config = require('./auth.config')
+// const config = require('./auth.config')
 const fs = require('fs')
 const path = require('path')
 const handlebars = require('handlebars')
