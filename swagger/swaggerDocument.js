@@ -127,8 +127,8 @@
                         'content':{
                             'application/json':{
                                 schema:{
-                                    type:'array',
-                                    items:{
+                                    type:'object',
+                                    properties:{
                                         id:{
                                             type:'string',
                                             description:'ID of the job'
@@ -176,8 +176,8 @@
                         'content':{
                             'application/json':{
                                 schema:{
-                                    type:'array',
-                                    items:{
+                                    type:'object',
+                                    properties:{
                                         id:{
                                             type:'string',
                                             description:'ID of the job'
