@@ -1,11 +1,12 @@
+require('dotenv').config()
 const nodemailer = require('nodemailer')
 // const config = require('./auth.config')
 const fs = require('fs')
 const path = require('path')
 const handlebars = require('handlebars')
 
-const user = config.user
-const pass = config.pass
+const user = process.env.USER
+const pass = process.env.PASS
 
 const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/index.hbs"), "utf8")
 
