@@ -23,6 +23,7 @@ app.use('/api-docs' ,swaggerUi.serve , swaggerUi.setup(swaggerDocument))
 app.get('/', (req,res) =>{
     res.send('Welcome')
 })
+
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URL)
