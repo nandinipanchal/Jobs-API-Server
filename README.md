@@ -11,10 +11,6 @@ MONGO_URL = <br>
 JWT_SECRET = <br>
 JWT_LIFETIME = <br>
 LIMIT = <br>
-
-## auth.config.js
-module.exports ={
-    user:`'abc@example.com'`,<br>
-    pass:`'1234'`
-}
+USER = <br>
+PASS = <br>
 
